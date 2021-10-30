@@ -1,7 +1,7 @@
 module.exports = {
-    // siteMetadata: {
-    //     siteUrl: 'https://www.yourdomain.tld',
-    // },
+    siteMetadata: {
+        siteUrl: 'https://gatsby-weather-app.pages.dev/',
+    },
     plugins: [{
         resolve: 'gatsby-plugin-manifest',
         options: {
@@ -15,16 +15,6 @@ module.exports = {
             cache_busting_mode: 'none',
         },
     },
-        // {
-        //     resolve: 'gatsby-plugin-offline',
-        //     options: {
-        //         globPatterns: ['**/icon-path'],
-        //         precachePages: ['/', '/404'],
-        //         // workboxConfig: {
-        //         //     globPatterns: ['**/icon-path*'],
-        //         // }
-        //     }
-        // },
         'gatsby-plugin-offline',
         'gatsby-plugin-postcss',
     ]
