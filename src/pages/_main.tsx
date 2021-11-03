@@ -1,11 +1,11 @@
-import * as React from "react"
+import * as React from "react";
 
-const Main = () => {
-    return (
-        <main className="flex-grow">
-            Main content
-        </main>
-    )
-}
+const Main = (props) => {
+  return (
+    <main className="flex-grow">
+      <pre className="w-14 text-center p-5">{JSON.stringify(props.weather, undefined, 2)}</pre>
+    </main>
+  );
+};
 
-export default Main
+export default Main;

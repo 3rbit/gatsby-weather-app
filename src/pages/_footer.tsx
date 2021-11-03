@@ -1,17 +1,11 @@
-import * as React from "react"
+import * as React from "react";
 
 const Footer = () => {
   return (
     <footer className="container py-5 flex justify-evenly">
-      <div className="lef">
-
-      This is a weather app made by Jeremy.
-      </div>
-      <div className="right">
-        Right side
-      </div>
+      <div className="lef">This is a weather app made by Jeremy.</div>
     </footer>
-  )
-}
+  );
+};
 
-export default Footer
+export default Footer;
