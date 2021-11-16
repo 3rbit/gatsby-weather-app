@@ -1,15 +1,19 @@
-import * as React from "react";
-import Footer from "./_footer";
-import Main from "./_main";
-import Header from "./_header";
+import React, { useState, useEffect, useRef } from "react"
+import Footer from "../components/footer";
+import Main from "../components/main";
+import Header from "../components/header";
+import Radar from "../components/radar";
+import { usePosition } from "../hooks/usePosition";
 
 // markup
 const IndexPage = () => {
-  const [location, setLocation] = React.useState("Melbourne");
-  const [weather, setWeather] = React.useState(null);
-  const formValue = React.useRef(null);
+  const [location, setLocation] = useState("Melbourne");
+  const [weather, setWeather] = useState(null);
+  const formValue = useRef(null);
 
-  React.useEffect(() => {
+  const position = usePosition();
+
+  useEffect(() => {
     fetch(
       "https://api.weatherapi.com/v1/current.json?key=c23436de48204e978b245925210311&q=" +
         location
@@ -35,6 +39,7 @@ const IndexPage = () => {
         formValue={formValue}
       />
       <Main weather={weather} />
+      <Radar position={position}/>
       <Footer />
     </body>
   );
