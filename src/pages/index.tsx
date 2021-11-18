@@ -4,6 +4,8 @@ import Main from "../components/main";
 import Header from "../components/header";
 import Radar from "../components/radar";
 import { usePosition } from "../hooks/usePosition";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCoffee, faLocationDot } from "@fortawesome/free-solid-svg-icons";
 
 // markup
 const IndexPage = () => {
@@ -16,7 +18,7 @@ const IndexPage = () => {
   useEffect(() => {
     fetch(
       "https://api.weatherapi.com/v1/current.json?key=c23436de48204e978b245925210311&q=" +
-        location
+      location
     )
       .then((response) => response.json())
       .then((data) => setWeather(data))
@@ -38,8 +40,24 @@ const IndexPage = () => {
         handleSubmit={handleSubmit}
         formValue={formValue}
       />
+
+      <i className="fa-solid fa-location-dot"></i>askdfja;sldkjf
+      <div>
+        <FontAwesomeIcon icon={['fab', 'apple']} />
+        <FontAwesomeIcon icon={['fab', 'microsoft']} />
+        <FontAwesomeIcon icon={['fab', 'google']} />
+
+        <FontAwesomeIcon icon="check-square" />
+        <FontAwesomeIcon icon="coffee" />
+        <FontAwesomeIcon icon={['fas', 'coffee']} />
+        <FontAwesomeIcon icon={['far', 'coffee']} />
+        <FontAwesomeIcon icon={faCoffee} />
+        <FontAwesomeIcon icon={faLocationDot} />
+        With Coffee Checked, these companies always know their coffee is hot and ready!
+      </div>
+
       <Main weather={weather} />
-      <Radar position={position}/>
+      <Radar position={position} />
       <Footer />
     </body>
   );
