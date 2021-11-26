@@ -16,6 +16,12 @@ module.exports = {
         cache_busting_mode: "none",
       },
     },
+    {
+      resolve: `gatsby-plugin-layout`,
+      options: {
+        component: require.resolve(`./src/layouts/index.tsx`),
+      },
+    },
     "gatsby-plugin-offline",
     "gatsby-plugin-postcss",
     "gatsby-plugin-react-leaflet",
