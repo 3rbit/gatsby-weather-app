@@ -1,26 +1,24 @@
+import {
+  faGear,
+  faSatelliteDish,
+  faTemperatureHalf,
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useRef, FormEvent, useContext } from "react";
-import ContextProvider, { LocationContext } from "../hooks/globalContext";
+import ContextProvider, { LocationContext } from "../utilities/globalContext";
 
 export default function Layout({ children }) {
-  const location = useContext(LocationContext);
   const formValue = useRef(null);
 
   return (
     <ContextProvider>
-      <header>
-        <LocationContext.Consumer>
-          {({ location, setLocation }) => (
+      <LocationContext.Consumer>
+        {({ location, setLocation }) => (
+          <header>
             <form
               onSubmit={(event: FormEvent) => {
                 event.preventDefault();
-                
-                let name = formValue.current.value;
-
-                
-
                 setLocation(formValue.current.value);
-                console.log("hi there im here");
-                console.log(location);
               }}
               className="container mx-auto my-1.5 rounded-full shadow-md p-5 flex items-center"
             >
@@ -36,13 +34,35 @@ export default function Layout({ children }) {
                 className="rounded-full w-28 h-12 p-2 bg-blue-500 active:bg-blue-300 focus:outline-none"
               />
             </form>
-          )}
-        </LocationContext.Consumer>
-        <h1 className="font-bold text-3xl text-center py-5">{location}</h1>
-      </header>
+          </header>
+        )}
+      </LocationContext.Consumer>
 
       {children}
 
+      <div className="w-full py-4 rounded-t-xl bg-gray-700 text-white font-bold fixed bottom-0 left-1/2 -translate-x-2/4 flex items-center justify-center">
+        <FontAwesomeIcon
+          icon={faTemperatureHalf}
+          className="flex-1 h-8"
+          onClick={() => {
+            console.log("hi world");
+          }}
+        />
+        <FontAwesomeIcon
+          icon={faSatelliteDish}
+          className="flex-1 h-8"
+          onClick={() => {
+            console.log("hi world");
+          }}
+        />
+        <FontAwesomeIcon
+          icon={faGear}
+          className="flex-1 h-8"
+          onClick={() => {
+            console.log("hi world");
+          }}
+        />
+      </div>
       <footer className="container py-5 flex justify-evenly">
         <div className="lef">This is a weather app made by Jeremy.</div>
       </footer>

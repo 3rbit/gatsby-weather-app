@@ -1,8 +1,6 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
-import React from "react";
-import { MapContainer, Marker, Popup, TileLayer, useMap } from "react-leaflet";
-import { divIcon, point } from "leaflet";
+import React, { useContext } from "react";
+import { MapContainer, Marker, TileLayer } from "react-leaflet";
+import { PositionContext } from "../utilities/globalContext";
 
 const id = "mapbox/satellite-v9";
 const access_token =
@@ -13,14 +11,14 @@ const access_token =
 //   map.flyTo
 // }
 
-export default function Radar(props: any) {
-  const { position } = props.position;
+export default function Radar() {
+  const { position } = useContext(PositionContext)
   return (
     <MapContainer
       center={position}
       zoom={10}
       scrollWheelZoom={false}
-      style={{ minHeight: "100vh", minWidth: "100vw" }}
+      className="min-h-screen min-w-full"
     >
       <TileLayer
         attribution='Imagery &copy; <a href="https://www.mapbox.com/">Mapbox</a>'
