@@ -24,5 +24,5 @@ export const usePosition = () => {
       );
     }, []);
   
-    return { position };
+    return [position, setPosition];
   }
