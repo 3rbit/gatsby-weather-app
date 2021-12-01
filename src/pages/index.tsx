@@ -5,6 +5,7 @@ import { WeatherContext } from "../utilities/globalContext";
 export default function Index(props: any) {
   const { weather } = useContext(WeatherContext);
 
+  console.log(weather)
   return (
     <>
       <h1 className="pt-4 font-bold text-center text-3xl">

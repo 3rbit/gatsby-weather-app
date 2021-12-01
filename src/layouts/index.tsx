@@ -40,31 +40,28 @@ export default function Layout({ children }) {
 
       {children}
 
-      <div className="w-full py-4 rounded-t-xl bg-gray-700 text-white font-bold fixed bottom-0 left-1/2 -translate-x-2/4 flex items-center justify-center">
+      <footer className="w-full py-4 rounded-t-xl bg-gray-800 text-white font-bold fixed bottom-0 left-1/2 -translate-x-2/4 flex items-center justify-center">
         <FontAwesomeIcon
           icon={faTemperatureHalf}
           className="flex-1 h-8"
           onClick={() => {
-            console.log("hi world");
+            console.log("you clicked the weather button");
           }}
         />
         <FontAwesomeIcon
           icon={faSatelliteDish}
           className="flex-1 h-8"
           onClick={() => {
-            console.log("hi world");
+            console.log("you clicked the radar button");
           }}
         />
         <FontAwesomeIcon
           icon={faGear}
           className="flex-1 h-8"
           onClick={() => {
-            console.log("hi world");
+            console.log("you clicked the settings button");
           }}
         />
-      </div>
-      <footer className="container py-5 flex justify-evenly">
-        <div className="lef">This is a weather app made by Jeremy.</div>
       </footer>
     </ContextProvider>
   );

@@ -12,13 +12,13 @@ const access_token =
 // }
 
 export default function Radar() {
-  const { position } = useContext(PositionContext)
+  const { position } = useContext(PositionContext);
   return (
     <MapContainer
       center={position}
       zoom={10}
       scrollWheelZoom={false}
-      className="min-h-screen min-w-full"
+      style={{ minHeight: "80vh", minWidth: "100vw" }}
     >
       <TileLayer
         attribution='Imagery &copy; <a href="https://www.mapbox.com/">Mapbox</a>'

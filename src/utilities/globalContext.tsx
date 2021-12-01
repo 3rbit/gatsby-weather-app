@@ -6,15 +6,27 @@ const defaultPosition = {
   lat: -37.814,
   lon: 144.96332,
 };
+const defaultWeather = {
+  location: {
+    name: "Melbourne",
+    region: "Victoria",
+    country: "Australia",
+    lat: -37.82,
+    lon: 144.97,
+    tz_id: "Australia/Melbourne",
+    localtime_epoch: 1638341563,
+    localtime: "2021-12-01 17:52",
+  },
+};
 
 export const PositionContext = createContext(null);
 export const LocationContext = createContext(null);
-export const WeatherContext = createContext(null);
+export const WeatherContext = createContext({ weather: defaultWeather });
 
 export default function ContextProvider({ children }) {
   const [position, setPosition] = useState(defaultPosition);
   const [location, setLocation] = useState(null);
-  const [weather, setWeather] = useState(null);
+  const [weather, setWeather] = useState(defaultWeather);
 
   useEffect(() => {
     let lat = -37.814,
@@ -50,7 +62,7 @@ export default function ContextProvider({ children }) {
         setWeather(data);
       })
       .catch((err) => console.error(err));
-  }, [, position]);
+  }, [position]);
 
   useEffect(() => {
     fetch(
