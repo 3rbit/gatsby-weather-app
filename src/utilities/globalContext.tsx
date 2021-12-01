@@ -62,6 +62,7 @@ export default function ContextProvider({ children }) {
         setWeather(data);
       })
       .catch((err) => console.error(err));
+      console.log("weather has been updated because of pos")
   }, [position]);
 
   useEffect(() => {

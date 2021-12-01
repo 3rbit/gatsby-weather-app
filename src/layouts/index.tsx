@@ -4,6 +4,7 @@ import {
   faTemperatureHalf,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Link } from "gatsby";
 import React, { useRef, FormEvent, useContext } from "react";
 import ContextProvider, { LocationContext } from "../utilities/globalContext";
 
@@ -40,28 +41,40 @@ export default function Layout({ children }) {
 
       {children}
 
-      <footer className="w-full py-4 rounded-t-xl bg-gray-800 text-white font-bold fixed bottom-0 left-1/2 -translate-x-2/4 flex items-center justify-center">
-        <FontAwesomeIcon
-          icon={faTemperatureHalf}
-          className="flex-1 h-8"
-          onClick={() => {
-            console.log("you clicked the weather button");
-          }}
-        />
-        <FontAwesomeIcon
-          icon={faSatelliteDish}
-          className="flex-1 h-8"
-          onClick={() => {
-            console.log("you clicked the radar button");
-          }}
-        />
-        <FontAwesomeIcon
-          icon={faGear}
-          className="flex-1 h-8"
-          onClick={() => {
-            console.log("you clicked the settings button");
-          }}
-        />
+      <footer className="w-full py-4 rounded-t-xl shadow-2xl bg-gray-800 text-white font-bold fixed bottom-0 left-1/2 -translate-x-2/4 flex flex-row text-center justify-center">
+        <div className="flex-1 text-center">
+          <Link to="/">
+            <FontAwesomeIcon
+              icon={faTemperatureHalf}
+              className="h-8"
+              onClick={() => {
+                console.log("you clicked the weather button");
+              }}
+            />
+          </Link>
+        </div>
+        <div className="flex-1 text-center">
+          <Link to="/radar" className="flex-1">
+            <FontAwesomeIcon
+              icon={faSatelliteDish}
+              className="h-8"
+              onClick={() => {
+                console.log("you clicked the radar button");
+              }}
+            />
+          </Link>
+        </div>
+        <div className="flex-1 text-center">
+          <Link to="/settings" className="flex-1">
+            <FontAwesomeIcon
+              icon={faGear}
+              className="h-8"
+              onClick={() => {
+                console.log("you clicked the settings button");
+              }}
+            />
+          </Link>
+        </div>
       </footer>
     </ContextProvider>
   );
