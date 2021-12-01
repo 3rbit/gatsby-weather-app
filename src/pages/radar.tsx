@@ -18,7 +18,7 @@ export default function Radar() {
       center={position}
       zoom={10}
       scrollWheelZoom={false}
-      style={{ minHeight: "80vh", minWidth: "100vw" }}
+      style={{ minHeight: "75vh", minWidth: "100vw" }}
       bounds
     >
       <TileLayer

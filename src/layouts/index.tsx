@@ -13,69 +13,72 @@ export default function Layout({ children }) {
 
   return (
     <ContextProvider>
-      <LocationContext.Consumer>
-        {({ location, setLocation }) => (
-          <header>
-            <form
-              onSubmit={(event: FormEvent) => {
-                event.preventDefault();
-                setLocation(formValue.current.value);
-              }}
-              className="container mx-auto my-1.5 rounded-full shadow-md p-5 flex items-center"
-            >
-              <input
-                type="text"
-                placeholder="Search Location"
-                ref={formValue}
-                className="w-full px-6 leading-tight focus:outline-none"
-              />
-              <input
-                type="submit"
-                value="Search"
-                className="rounded-full w-28 h-12 p-2 bg-blue-500 active:bg-blue-300 focus:outline-none"
-              />
-            </form>
-          </header>
-        )}
-      </LocationContext.Consumer>
+      <div className="overflow-y-hidden">
+        <LocationContext.Consumer>
+          {({ location, setLocation }) => (
+            <header>
+              <form
+                onSubmit={(event: FormEvent) => {
+                  event.preventDefault();
+                  setLocation(formValue.current.value);
+                }}
+                className="w-full mx-auto p-5 mb-1.5 bg-gray-800 shadow-md flex items-center text-white"
+              >
+                <input
+                  type="text"
+                  placeholder="Search Location"
+                  ref={formValue}
+                  className="w-full px-6 bg-gray-800 focus:outline-none"
+                />
+                <input
+                  type="submit"
+                  value="Search"
+                  className="rounded-full w-28 h-12 p-2 bg-blue-500 active:bg-blue-300 focus:outline-none"
+                />
+              </form>
+            </header>
+          )}
+        </LocationContext.Consumer>
 
-      {children}
+        {children}
 
-      <footer className="w-full py-4 rounded-t-xl shadow-2xl bg-gray-800 text-white font-bold fixed bottom-0 left-1/2 -translate-x-2/4 flex flex-row text-center justify-center">
-        <div className="flex-1 text-center">
-          <Link to="/">
-            <FontAwesomeIcon
-              icon={faTemperatureHalf}
-              className="h-8"
-              onClick={() => {
-                console.log("you clicked the weather button");
-              }}
-            />
-          </Link>
-        </div>
-        <div className="flex-1 text-center">
-          <Link to="/radar" className="flex-1">
-            <FontAwesomeIcon
-              icon={faSatelliteDish}
-              className="h-8"
-              onClick={() => {
-                console.log("you clicked the radar button");
-              }}
-            />
-          </Link>
-        </div>
-        <div className="flex-1 text-center">
-          <Link to="/settings" className="flex-1">
-            <FontAwesomeIcon
-              icon={faGear}
-              className="h-8"
-              onClick={() => {
-                console.log("you clicked the settings button");
-              }}
-            />
-          </Link>
-        </div>
-      </footer>
+        <div className="h-20"></div>
+        <footer className="w-full py-5 shadow-md bg-gray-800 text-white font-bold fixed bottom-0 left-1/2 -translate-x-2/4 flex flex-row text-center justify-center">
+          <div className="flex-1 text-center">
+            <Link to="/">
+              <FontAwesomeIcon
+                icon={faTemperatureHalf}
+                className="h-8"
+                onClick={() => {
+                  console.log("you clicked the weather button");
+                }}
+              />
+            </Link>
+          </div>
+          <div className="flex-1 text-center">
+            <Link to="/radar" className="flex-1">
+              <FontAwesomeIcon
+                icon={faSatelliteDish}
+                className="h-8"
+                onClick={() => {
+                  console.log("you clicked the radar button");
+                }}
+              />
+            </Link>
+          </div>
+          <div className="flex-1 text-center">
+            <Link to="/settings" className="flex-1">
+              <FontAwesomeIcon
+                icon={faGear}
+                className="h-8"
+                onClick={() => {
+                  console.log("you clicked the settings button");
+                }}
+              />
+            </Link>
+          </div>
+        </footer>
+      </div>
     </ContextProvider>
   );
 }
