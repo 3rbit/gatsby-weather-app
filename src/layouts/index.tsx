@@ -5,78 +5,41 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "gatsby";
-import React, { useRef, FormEvent, useContext } from "react";
-import ContextProvider, { LocationContext } from "../utilities/globalContext";
+import React, { useRef, FormEvent, useContext, useState } from "react";
+import ContextProvider, {
+  LocationContext,
+  PositionContext,
+  WeatherContext,
+} from "../utilities/globalContext";
+
+const weatherAPIkey = "c23436de48204e978b245925210311";
 
 export default function Layout({ children }) {
   const formValue = useRef(null);
 
   return (
     <ContextProvider>
-      <div className="overflow-y-hidden">
-        <LocationContext.Consumer>
-          {({ location, setLocation }) => (
-            <header>
-              <form
-                onSubmit={(event: FormEvent) => {
-                  event.preventDefault();
-                  setLocation(formValue.current.value);
-                }}
-                className="w-full mx-auto p-5 mb-1.5 bg-gray-800 shadow-md flex items-center text-white"
-              >
-                <input
-                  type="text"
-                  placeholder="Search Location"
-                  ref={formValue}
-                  className="w-full px-6 bg-gray-800 focus:outline-none"
-                />
-                <input
-                  type="submit"
-                  value="Search"
-                  className="rounded-full w-28 h-12 p-2 bg-blue-500 active:bg-blue-300 focus:outline-none"
-                />
-              </form>
-            </header>
-          )}
-        </LocationContext.Consumer>
-
+      <div className="overflow-hidden">
         {children}
 
-        <div className="h-20"></div>
-        <footer className="w-full py-5 shadow-md bg-gray-800 text-white font-bold fixed bottom-0 left-1/2 -translate-x-2/4 flex flex-row text-center justify-center">
+        <footer className="w-full py-5 shadow-md bg-gray-800 text-white font-bold fixed bottom-0 flex flex-row text-center justify-center">
+          <div className="flex-none w-1/6"></div>
           <div className="flex-1 text-center">
             <Link to="/">
-              <FontAwesomeIcon
-                icon={faTemperatureHalf}
-                className="h-8"
-                onClick={() => {
-                  console.log("you clicked the weather button");
-                }}
-              />
+              <FontAwesomeIcon icon={faTemperatureHalf} className="scale-150" />
             </Link>
           </div>
           <div className="flex-1 text-center">
             <Link to="/radar" className="flex-1">
-              <FontAwesomeIcon
-                icon={faSatelliteDish}
-                className="h-8"
-                onClick={() => {
-                  console.log("you clicked the radar button");
-                }}
-              />
+              <FontAwesomeIcon icon={faSatelliteDish} className="scale-150" />
             </Link>
           </div>
           <div className="flex-1 text-center">
             <Link to="/settings" className="flex-1">
-              <FontAwesomeIcon
-                icon={faGear}
-                className="h-8"
-                onClick={() => {
-                  console.log("you clicked the settings button");
-                }}
-              />
+              <FontAwesomeIcon icon={faGear} className="scale-150" />
             </Link>
           </div>
+          <div className="flex-none w-1/6"></div>
         </footer>
       </div>
     </ContextProvider>

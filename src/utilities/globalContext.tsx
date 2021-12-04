@@ -1,5 +1,6 @@
 /* Reference: https://www.w3schools.com/react/react_usecontext.asp */
 import React, { createContext, useEffect, useState } from "react";
+import { useMap } from "react-leaflet";
 
 const weatherAPIkey = "c23436de48204e978b245925210311";
 const defaultPosition = {
@@ -21,7 +22,7 @@ const defaultWeather = {
 
 export const PositionContext = createContext(null);
 export const LocationContext = createContext(null);
-export const WeatherContext = createContext({ weather: defaultWeather });
+export const WeatherContext = createContext({ weather: defaultWeather, setWeather: null });
 
 export default function ContextProvider({ children }) {
   const [position, setPosition] = useState(defaultPosition);
@@ -53,6 +54,7 @@ export default function ContextProvider({ children }) {
     setPosition({ lat, lon });
   }, []);
 
+  // Called everytime a position is changed
   useEffect(() => {
     fetch(
       `https://api.weatherapi.com/v1/forecast.json?key=${weatherAPIkey}&q=${position.lat},${position.lon}&days=2&aqi=no&alerts=no`
@@ -62,20 +64,8 @@ export default function ContextProvider({ children }) {
         setWeather(data);
       })
       .catch((err) => console.error(err));
-      console.log("weather has been updated because of pos")
-  }, [position]);
 
-  useEffect(() => {
-    fetch(
-      `https://api.weatherapi.com/v1/forecast.json?key=${weatherAPIkey}&q=${location}&days=2&aqi=no&alerts=no`
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        setPosition({ lat: data.location.lat, lon: data.location.lon });
-        setWeather(data);
-      })
-      .catch((err) => console.error(err));
-  }, [location]);
+  }, [position]);
 
   return (
     <PositionContext.Provider value={{ position, setPosition }}>
