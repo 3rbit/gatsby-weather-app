@@ -12,8 +12,6 @@ import ContextProvider, {
   WeatherContext,
 } from "../utilities/globalContext";
 
-const weatherAPIkey = "c23436de48204e978b245925210311";
-
 export default function Layout({ children }) {
   const formValue = useRef(null);
 
