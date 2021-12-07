@@ -2,15 +2,15 @@
 <svg viewBox="0 0 640 512" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <linearGradient gradientUnits="userSpaceOnUse" x1="409.437" y1="221.934" x2="409.437" y2="533.054" id="gradient-1" gradientTransform="matrix(0.629458, -0.777034, 0.891179, 0.721925, -144.512777, 435.246068)">
-      <stop offset="0" style="stop-color: rgba(45, 187, 209, 0.25);"/>
-      <stop offset="1" style="stop-color: rgb(55, 163, 202);"/>
+      <stop offset="0" style="stop-color: rgb(110, 204, 218);"/>
+      <stop offset="1" style="stop-color: rgb(21, 69, 86);"/>
     </linearGradient>
     <linearGradient gradientUnits="userSpaceOnUse" x1="207.567" y1="0.001" x2="207.567" y2="415.987" id="gradient-0" gradientTransform="matrix(0.602715, 0.797957, -0.746705, 0.564004, 279.298004, -14.311007)">
-      <stop offset="0" style="stop-color: rgba(251, 251, 179, 0.56);"/>
-      <stop offset="1" style="stop-color: rgb(234, 234, 37);"/>
+      <stop offset="0" style="stop-color: rgba(248, 248, 63, 0.87);"/>
+      <stop offset="1" style="stop-color: rgb(177, 177, 45);"/>
     </linearGradient>
   </defs>
-  <path d="M 119.572 212 C 119.572 263.081 160.987 304.496 212.068 304.496 C 223.317 304.496 233.955 302.188 243.933 298.512 C 252.029 259.605 273.451 225.844 303.558 202.038 C 298.552 155.693 259.704 119.504 212.068 119.504 C 160.964 119.504 119.572 160.896 119.572 212 Z" style="paint-order: fill; fill-rule: nonzero; fill: rgb(248, 248, 98);">
+  <path d="M 119.572 212 C 119.572 263.081 160.987 304.496 212.068 304.496 C 223.317 304.496 233.955 302.188 243.933 298.512 C 252.029 259.605 273.451 225.844 303.558 202.038 C 298.552 155.693 259.704 119.504 212.068 119.504 C 160.964 119.504 119.572 160.896 119.572 212 Z" style="paint-order: fill; fill-rule: nonzero; fill: rgb(222, 222, 74);">
     <title>inner sun</title>
   </path>
   <path d="M 575.2 325.6 C 575.325 323.6 575.945 321.856 575.945 319.981 C 575.945 284.601 547.195 255.981 512.845 255.981 C 500.225 255.981 488.595 259.73 478.715 265.98 C 461.095 227.1 422.215 200.88 376.815 200.88 C 315.065 200.88 264.815 251 264.815 311.98 C 264.815 314.98 265.568 317.723 265.693 320.598 C 216.063 324.348 176.813 365.338 176.813 415.968 C 175.1 469 218.1 512 271.1 512 L 543.1 512 C 596.1 512 639.1 469.01 639.1 416.01 C 639.1 373.9 612.7 338.6 575.2 325.6 Z" style="paint-order: fill; fill-rule: nonzero; fill: url(#gradient-1);">
