@@ -12,17 +12,15 @@ const defaultWeather = {
     name: "Melbourne",
     region: "Victoria",
     country: "Australia",
-    lat: -37.82,
-    lon: 144.97,
-    tz_id: "Australia/Melbourne",
-    localtime_epoch: 1638341563,
-    localtime: "2021-12-01 17:52",
   },
 };
 
 export const PositionContext = createContext(null);
 export const LocationContext = createContext(null);
-export const WeatherContext = createContext({ weather: defaultWeather, setWeather: null });
+export const WeatherContext = createContext({
+  weather: defaultWeather,
+  setWeather: null,
+});
 
 export default function ContextProvider({ children }) {
   const [position, setPosition] = useState(defaultPosition);
@@ -30,28 +28,20 @@ export default function ContextProvider({ children }) {
   const [weather, setWeather] = useState(defaultWeather);
 
   useEffect(() => {
-    let lat = -37.814,
-      lon = 144.96332; // Default position = melbourne
-
     navigator.geolocation.getCurrentPosition(
-      ({ coords }) => {
-        lat = coords.latitude;
-        lon = coords.longitude;
-      },
+      ({ coords }) =>
+        setPosition({ lat: coords.latitude, lon: coords.longitude }),
       (blocked) => {
         if (blocked) {
           fetch("https://ipapi.co/json")
             .then((res) => res.json())
-            .then((data) => {
-              lat = data.latitude;
-              lon = data.longitude;
-            })
+            .then((data) =>
+              setPosition({ lat: data.latitude, lon: data.longitude })
+            )
             .catch((err) => console.error(err));
         }
       }
     );
-
-    setPosition({ lat, lon });
   }, []);
 
   // Called everytime a position is changed
@@ -64,7 +54,6 @@ export default function ContextProvider({ children }) {
         setWeather(data);
       })
       .catch((err) => console.error(err));
-
   }, [position]);
 
   return (

@@ -17,11 +17,9 @@ export default function Radar() {
 
   return (
     <MapContainer
-      center={position}
       maxZoom={10}
       scrollWheelZoom={false}
       className="h-screen w-screen z-0"
-      // style={{ minHeight: "100vh", minWidth: "100vw" }}
       bounds={bounds}
     >
       <TileLayer

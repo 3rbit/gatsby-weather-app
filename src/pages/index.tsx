@@ -5,7 +5,6 @@ import { WeatherContext } from "../utilities/globalContext";
 export default function Index(props: any) {
   const { weather } = useContext(WeatherContext);
 
-  console.log(weather);
   return (
     <>
       <SearchBar />
