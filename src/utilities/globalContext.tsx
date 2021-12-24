@@ -4,14 +4,14 @@ import { useMap } from "react-leaflet";
 
 const weatherAPIkey = "c23436de48204e978b245925210311";
 const defaultPosition = {
-  lat: -37.814,
-  lon: 144.96332,
+  lat: null,
+  lon: null,
 };
 const defaultWeather = {
   location: {
-    name: "Melbourne",
-    region: "Victoria",
-    country: "Australia",
+    name: "",
+    region: "",
+    country: "",
   },
 };
 
