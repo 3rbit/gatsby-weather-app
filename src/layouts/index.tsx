@@ -14,7 +14,7 @@ export default function Layout({ children }) {
       <div className="overflow-hidden">
         {children}
 
-        <footer className="w-full py-5 shadow-md bg-gray-800 text-white fixed bottom-0 flex justify-evenly">
+        <footer className="w-[calc(100%-2*theme(spacing.5))] py-5 m-5 rounded-3xl bg-gray-800 text-white fixed bottom-0 flex justify-evenly">
           <Link to="/">
             <FontAwesomeIcon icon={faTemperatureHalf} className="scale-150" />
           </Link>
