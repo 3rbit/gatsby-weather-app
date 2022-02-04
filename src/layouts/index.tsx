@@ -14,7 +14,7 @@ export default function Layout({ children }) {
       <div className="overflow-hidden">
         {children}
 
-        <footer className="content-full py-4 fixed bottom-0 flex justify-evenly">
+        <footer className="content-full py-5 fixed bottom-0 flex justify-evenly">
           <Link to="/">
             <FontAwesomeIcon icon={faTemperatureHalf} className="scale-150" />
           </Link>
