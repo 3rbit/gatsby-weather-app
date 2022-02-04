@@ -2,3 +2,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.content-full {
+    @apply w-[calc(100%-2*theme(spacing.2))] m-2 rounded-2xl bg-gray-800 text-white;
+}
