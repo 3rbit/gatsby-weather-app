@@ -3,6 +3,10 @@
 @tailwind components;
 @tailwind utilities;
 
-.content-full {
+.bubble-full {
+    @apply w-[calc(100%-2*theme(spacing.5))] m-5 rounded-3xl bg-gray-800 shadow-md text-white;
+}
+
+.bubble-2\/3 {
     @apply w-[calc(100%-2*theme(spacing.5))] m-5 rounded-3xl bg-gray-800 shadow-md text-white;
 }

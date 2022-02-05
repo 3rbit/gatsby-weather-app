@@ -1,19 +1,6 @@
 /* Reference: https://www.w3schools.com/react/react_usecontext.asp */
 import React, { createContext, useEffect, useState } from "react";
-import { useMap } from "react-leaflet";
-
-const weatherAPIkey = "c23436de48204e978b245925210311";
-const defaultPosition = {
-  lat: null,
-  lon: null,
-};
-const defaultWeather = {
-  location: {
-    name: "",
-    region: "",
-    country: "",
-  },
-};
+import { weatherAPIkey, defaultPosition, defaultWeather } from "./defaults";
 
 export const PositionContext = createContext(null);
 export const LocationContext = createContext(null);
