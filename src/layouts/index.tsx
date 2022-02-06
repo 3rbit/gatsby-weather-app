@@ -11,7 +11,7 @@ import ContextProvider from "../utilities/globalContext";
 export default function Layout({ children }) {
   return (
     <ContextProvider>
-      <div className="overflow-hidden">
+      <div className="overflow-hidden bg-gradient-to-b dark:from-slate-500 dark:to-slate-700 h-screen">
         {children}
 
         <footer className="bubble-full py-5 fixed bottom-0 flex justify-evenly">
