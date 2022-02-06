@@ -14,7 +14,7 @@ export default function Layout({ children }) {
       <div className="overflow-hidden bg-gradient-to-b dark:from-slate-500 dark:to-slate-700 h-screen">
         {children}
 
-        <footer className="bubble-full py-5 fixed bottom-0 flex justify-evenly">
+        <footer className="bubble w-[calc(100%-2*theme(spacing.5))] m-5 py-5 fixed bottom-0 flex justify-evenly">
           <Link to="/">
             <FontAwesomeIcon icon={faTemperatureHalf} className="scale-150" />
           </Link>
