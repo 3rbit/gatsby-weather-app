@@ -6,21 +6,15 @@ export default function LocationTime(props: any) {
   let date = new Date(weather.current.last_updated);
 
   return (
-    <div className="col-span-full">
-      <header className="rounded-3xl shadow-md text-white py-5 bg-gradient-to-b from-indigo-500 to-pink-500 flex justify-around items-center gap-5">
-        <div className="flex-col m-0 pl-5">
-          <h1 className="font-bold text-3xl">{weather.location.name}</h1>
-          <p className="font-bold italic text-lg">{weather.location.region}</p>
-        </div>
-        <div className="flex-col m-0 pr-5 text-right">
-          <p className="font-bold italic text-lg">
-            {date.toLocaleTimeString('en', {hour: 'numeric', minute:'numeric'})}
-          </p>
-          <p className="font-bold italic text-md">
-            {date.toLocaleDateString()}
-          </p>
-        </div>
-      </header>
-    </div>
+    <header className="col-span-full rounded-3xl shadow-md p-5 text-white bg-gradient-to-b from-indigo-500 to-pink-500 grid grid-cols-2">
+      <h1 className="col-start-1 row-start-1 font-bold text-3xl justify-self-start self-end">{weather.location.name}</h1>
+      <p className="col-start-1 row-start-2 font-bold italic text-lg justify-self-start self-start">{weather.location.region}</p>
+      <p className="col-start-2 row-start-1 font-bold italic text-lg justify-self-end self-end">
+        {date.toLocaleTimeString('en', { hour: 'numeric', minute: 'numeric' })}
+      </p>
+      <p className="col-start-2 row-start-2 font-bold italic text-md justify-self-end self-start">
+        {date.toLocaleDateString()}
+      </p>
+    </header>
   )
 }
