@@ -15,9 +15,7 @@ export default function Index(props: any) {
 
   return (
     <>
-      {/* <div className="flex flex-col h-[calc(100vh-4*spacing.5)]"> */}
-
-      <div className="grid grid-cols-12 gap-5 p-5 h-[90vh]">
+      <div className="grid grid-cols-12 gap-5 p-5 h-[80vh] z-0">
         <LocationTime />
         <Temperature />
         <MinMaxTemperature />
