@@ -24,6 +24,9 @@ export default function Layout({ children }) {
           <Link to="/radar">
             <FontAwesomeIcon icon={faSatelliteDish} className="scale-150" />
           </Link>
+          {/* <Link to="/settings" className="">
+            <FontAwesomeIcon icon={faGear} className="scale-150" />
+          </Link> */}
         </footer>
       </div>
     </ContextProvider>
