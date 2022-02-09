@@ -3,7 +3,7 @@ import { weatherAPIkey } from "../../utilities/defaults";
 import { PositionContext, WeatherContext } from "../../utilities/globalContext";
 
 export default function SearchBar({ className, setSearchResults }) {
-  const searchRef = useRef()
+  const searchRef = useRef(null)
 
   return (
     <PositionContext.Consumer>

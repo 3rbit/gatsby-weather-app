@@ -1,6 +1,6 @@
 import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { FormEvent, useRef } from "react";
+import React from "react";
 import { SearchLocation } from "../../utilities/types";
 
 export default function List({ locations }: { locations: SearchLocation[] }) {
@@ -11,7 +11,6 @@ export default function List({ locations }: { locations: SearchLocation[] }) {
       })
     )
   }
-
   return <></>
 }
 
