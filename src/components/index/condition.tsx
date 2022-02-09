@@ -7,7 +7,7 @@ export default function Condition(props: any) {
   return (
     <div className="bubble col-span-5 pb-5 flex flex-col items-center justify-center">
       <img src={weather.current.condition.icon} className="aspect-square" />
-      <p className="font-bold text-2xl">{weather.current.condition.text}</p>
+      <p className="font-bold text-2xl text-center">{weather.current.condition.text}</p>
     </div>
   )
 }

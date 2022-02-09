@@ -1,27 +1,20 @@
 import React, { useEffect, useRef, useState } from "react";
-import SearchBar from "../components/searchBar";
-import { weatherAPIkey } from "../utilities/defaults";
+import List from "../components/search/list";
+import SearchBar from "../components/search/searchBar";
+import { SearchLocation } from "../utilities/types";
 
 export default function Search() {
-  const [searchResults, setSearchResults] = useState([])
-
-  useEffect(() => {
-    console.log(searchResults)
-  }, [searchResults])
-
-  function typingOnChange() {
-    fetch(
-      `https://api.weatherapi.com/v1/search.json?key=${weatherAPIkey}&q=${tyingRef.current.value}`
-    )
-      .then((response) => response.json())
-      .then((data) => { console.log(data) })
-      .catch((err) => console.error(err));
-  }
+  const [searchResults, setSearchResults]:
+    [searchResults: SearchLocation[], setSearchResults: React.Dispatch<React.SetStateAction<SearchLocation[]>>]
+    = useState([])
 
   return (
     <div className="flex flex-col p-5 h-[85vh] gap-5">
       <SearchBar className="flex-none" setSearchResults={setSearchResults} />
-      <div className="bubble p-5 flex-grow"></div>
+      <ul className="bubble p-5 flex-grow flex flex-col gap-5 overflow-y-auto">
+        <List locations={searchResults} />
+      </ul>
+
     </div>
   );
 }

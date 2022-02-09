@@ -1,17 +1,26 @@
 /* Reference: https://www.w3schools.com/react/react_usecontext.asp */
 import React, { createContext, useEffect, useState } from "react";
 import { weatherAPIkey, defaultPosition, defaultWeather } from "./defaults";
+import { Location, Position } from "./types";
 
-export const PositionContext = createContext(null);
-export const LocationContext = createContext(null);
+export const PositionContext:
+  React.Context<{ position: Position, setPosition: React.Dispatch<React.SetStateAction<Position>> }>
+  = createContext(null);
+export const LocationContext:
+  React.Context<{ location: Location, setLocation: React.Dispatch<React.SetStateAction<Location>> }>
+  = createContext(null);
 export const WeatherContext = createContext({
   weather: defaultWeather,
   setWeather: null,
 });
 
 export default function ContextProvider({ children }) {
-  const [position, setPosition] = useState(defaultPosition);
-  const [location, setLocation] = useState(null);
+  const [position, setPosition]:
+    [position: Position, setPosition: React.Dispatch<React.SetStateAction<Position>>]
+    = useState(defaultPosition);
+  const [location, setLocation]:
+    [location: Location, setLocation: React.Dispatch<React.SetStateAction<Location>>]
+    = useState(null);
   const [weather, setWeather] = useState(defaultWeather);
 
   useEffect(() => {

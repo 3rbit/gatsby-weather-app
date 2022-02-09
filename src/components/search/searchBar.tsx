@@ -1,7 +1,6 @@
 import React, { FormEvent, useRef } from "react";
-import { PositionContext, WeatherContext } from "../utilities/globalContext";
-
-const weatherAPIkey = "c23436de48204e978b245925210311";
+import { weatherAPIkey } from "../../utilities/defaults";
+import { PositionContext, WeatherContext } from "../../utilities/globalContext";
 
 export default function SearchBar({ className, setSearchResults }) {
   const searchRef = useRef()
@@ -35,6 +34,8 @@ export default function SearchBar({ className, setSearchResults }) {
                 placeholder="Search Location"
                 ref={searchRef}
                 onChange={() => {
+                  console.log("searching...");
+                  
                   fetch(
                     `https://api.weatherapi.com/v1/search.json?key=${weatherAPIkey}&q=${searchRef.current.value}`
                   )
