@@ -1,6 +1,7 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import List from "../components/search/list";
 import SearchBar from "../components/search/searchBar";
+import { PositionContext, WeatherContext } from "../utilities/globalContext";
 import { SearchLocation } from "../utilities/types";
 
 export default function Search() {
@@ -9,12 +10,28 @@ export default function Search() {
     = useState([])
 
   return (
-    <div className="flex flex-col p-5 h-[85vh] gap-5">
-      <SearchBar className="flex-none" setSearchResults={setSearchResults} />
-      <ul className="bubble p-5 flex-grow flex flex-col gap-5 overflow-y-auto">
-        <List locations={searchResults} />
-      </ul>
+    <PositionContext.Consumer>
+      {({ setPosition }) => (
+        <WeatherContext.Consumer>
+          {({ setWeather }) => (
 
-    </div>
+            <div className="flex flex-col p-5 h-[85vh] gap-5">
+              <SearchBar
+                className="flex-none bubble py-5"
+                setSearchResults={setSearchResults}
+                setWeather={setWeather}
+                setPosition={setPosition} />
+              <List
+                className="flex-grow bubble"
+                locations={searchResults}
+                setWeather={setWeather}
+                setPosition={setPosition} />
+
+            </div>
+
+          )}
+        </WeatherContext.Consumer>
+      )}
+    </PositionContext.Consumer>
   );
 }

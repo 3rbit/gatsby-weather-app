@@ -1,8 +1,8 @@
 import { weatherAPIkey } from "./defaults";
-import { Position } from "./types";
+import { Position, Weather } from "./types";
 
-export function forecastNameQuery(name: string): [Position, any] {
-  let position: Position, weather: any
+export function forecastNameQuery(name: string): [Position, Weather] {
+  let position: Position, weather: Weather
 
   fetch(
     `https://api.weatherapi.com/v1/forecast.json?key=${weatherAPIkey}&q=${name}&days=2&aqi=no&alerts=no`
@@ -14,6 +14,8 @@ export function forecastNameQuery(name: string): [Position, any] {
         lon: data.location.lon,
       };
       weather = data;
+      console.log(data);
+      
     })
     .catch((err) => console.error(err));
     

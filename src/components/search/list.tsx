@@ -1,25 +1,48 @@
 import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React from "react";
-import { SearchLocation } from "../../utilities/types";
+import React, { FormEvent, useCallback } from "react";
+import { forecastNameQuery } from "../../utilities/queries";
+import { Position, SearchLocation, Weather } from "../../utilities/types";
 
-export default function List({ locations }: { locations: SearchLocation[] }) {
-  if (locations.length > 0) {
-    return (
-      locations.map((location) => {
-        return <ListItem location={location} />
-      })
-    )
-  }
-  return <></>
+export default function List({ className, locations, setPosition, setWeather }: {
+  className: string
+  locations: SearchLocation[]
+  setPosition: React.Dispatch<React.SetStateAction<Position>>
+  setWeather: React.Dispatch<React.SetStateAction<Weather>>
+}): JSX.Element {
+
+  const handleItemSelect = useCallback((event: FormEvent, location: SearchLocation) => {
+    event.preventDefault()
+    console.log(location, 'clicked')
+    console.log(location.name);
+    
+    const [newPosition, newWeather] = forecastNameQuery(location.name.replace(" ", "%20"))
+    console.log(newPosition, newWeather);
+    
+    setPosition(newPosition)
+    setWeather(newWeather)
+  }, [])
+
+  return (
+    <ul className={`${className} flex flex-col gap-5 overflow-y-auto`}>
+      {locations.length > 0 &&
+        locations.map((location) => {
+          return <ListItem location={location} handleItemSelect={handleItemSelect} />
+        })
+      }
+    </ul>
+  )
 }
 
-function ListItem({ location }: { location: SearchLocation }) {
+function ListItem({ location, handleItemSelect }: {
+  location: SearchLocation
+  handleItemSelect: (event: FormEvent, location: SearchLocation) => any
+}) {
   return (
     <li
       key={location.id}
       className="flex justify-between items-center text-center"
-      onClick={() => console.log(location.id, 'clicked')}
+      onClick={(event) => handleItemSelect(event, location)}
     >
       <FontAwesomeIcon icon={faLocationDot} className="" />
       <p>{location.name}</p>

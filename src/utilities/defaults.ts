@@ -5,16 +5,22 @@ export const defaultPosition = {
 };
 export const defaultWeather = {
   location: {
-    name: "",
-    region: "",
-    country: "",
+    "name": "",
+    "region": "",
+    "country": "",
+    "lat": null,
+    "lon": null,
+    "tz_id": "",
+    "localtime_epoch": null,
+    "localtime": ""
   },
   current: {
     "last_updated_epoch": null,
     "last_updated": "",
     "temp_c": null,
     "temp_f": null,
-    "is_day": null,
+    "feelslike_c": null,
+    "feelslike_f": null,
     "condition": {
       "text": "",
       "icon": "",
@@ -30,8 +36,7 @@ export const defaultWeather = {
     "precip_in": null,
     "humidity": null,
     "cloud": null,
-    "feelslike_c": null,
-    "feelslike_f": null,
+    "is_day": null,
     "vis_km": null,
     "vis_miles": null,
     "uv": null,
@@ -74,7 +79,7 @@ export const defaultWeather = {
           "moonrise": "",
           "moonset": "",
           "moon_phase": "",
-          "moon_illumination": ""
+          "moon_illumination": null
         },
         "hour": [
           {
@@ -82,7 +87,6 @@ export const defaultWeather = {
             "time": "",
             "temp_c": null,
             "temp_f": null,
-            "is_day": null,
             "condition": {
               "text": "",
               "icon": "",
@@ -110,6 +114,7 @@ export const defaultWeather = {
             "chance_of_rain": null,
             "will_it_snow": null,
             "chance_of_snow": null,
+            "is_day": null,
             "vis_km": null,
             "vis_miles": null,
             "gust_mph": null,
