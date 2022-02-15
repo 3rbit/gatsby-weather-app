@@ -11,14 +11,9 @@ export default function List({ className, locations, setPosition, setWeather }: 
   setWeather: React.Dispatch<React.SetStateAction<Weather>>
 }): JSX.Element {
 
-  const handleItemSelect = useCallback((event: FormEvent, location: SearchLocation) => {
-    event.preventDefault()
-    console.log(location, 'clicked')
-    console.log(location.name);
-    
-    const [newPosition, newWeather] = forecastNameQuery(location.name.replace(" ", "%20"))
-    console.log(newPosition, newWeather);
-    
+  const handleItemSelect = useCallback(async (event: FormEvent, location: SearchLocation) => {
+    event.preventDefault()    
+    const [newPosition, newWeather] = await forecastNameQuery(location.name)
     setPosition(newPosition)
     setWeather(newWeather)
   }, [])

@@ -1,6 +1,7 @@
 /* Reference: https://www.w3schools.com/react/react_usecontext.asp */
 import React, { createContext, useEffect, useState } from "react";
 import { defaultPosition, defaultWeather, weatherAPIkey } from "./defaults";
+import { forecastPositionQuery, positionFromIP } from "./queries";
 import { Location, Position, Weather } from "./types";
 
 export const PositionContext:
@@ -26,54 +27,15 @@ export default function ContextProvider({ children }) {
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
-      ({ coords }) => {
-        setPosition({ lat: coords.latitude, lon: coords.longitude })
-        fetch(
-          `https://api.weatherapi.com/v1/forecast.json?key=${weatherAPIkey}&q=${coords.latitude},${coords.longitude}&days=2&aqi=no&alerts=no`
-        )
-          .then((response) => response.json())
-          .then((data) => {
-            setWeather(data);
-          })
-          .catch((err) => console.error(err));
-      },
-      (blocked) => {
-        if (blocked) {
-          fetch("https://ipapi.co/json")
-            .then((res) => res.json())
-            .then((data) => {
-              setPosition({ lat: data.latitude, lon: data.longitude })
-              fetch(
-                `https://api.weatherapi.com/v1/forecast.json?key=${weatherAPIkey}&q=${data.latitude},${data.longitude}&days=2&aqi=no&alerts=no`
-              )
-                .then((response) => response.json())
-                .then((data) => {
-                  setWeather(data);
-                })
-                .catch((err) => console.error(err));
-            })
-            .catch((err) => console.error(err));
-        }
-      }
+      ({ coords }) => callback({ lat: coords.latitude, lon: coords.longitude }),
+      async () => callback(await positionFromIP())
     );
 
-
-
+    let callback = async (position: Position) => {
+      setPosition(position)
+      setWeather(await forecastPositionQuery(position))
+    }
   }, []);
-
-  // Called everytime a position is changed
-  // useEffect(() => {
-  //   console.log(position, "changing weather from position");
-
-  //   fetch(
-  //     `https://api.weatherapi.com/v1/forecast.json?key=${weatherAPIkey}&q=${position.lat},${position.lon}&days=2&aqi=no&alerts=no`
-  //   )
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       setWeather(data);
-  //     })
-  //     .catch((err) => console.error(err));
-  // }, [position]);
 
   return (
     <PositionContext.Provider value={{ position, setPosition }}>

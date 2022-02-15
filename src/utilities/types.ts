@@ -88,7 +88,7 @@ type ForecastDayAstro = {
   moon_illumination: number
 }
 
-type ForecastDayHour {
+type ForecastDayHour = {
   time_epoch: number
   time: string
   temp_f: number
