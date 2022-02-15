@@ -1,4 +1,5 @@
 import {
+  faGear,
   faMagnifyingGlass,
   faSatelliteDish,
   faTemperatureHalf,
@@ -18,15 +19,15 @@ export default function Layout({ children }) {
           <Link to="/">
             <FontAwesomeIcon icon={faTemperatureHalf} className="scale-150" />
           </Link>
-          <Link to="/search">
-            <FontAwesomeIcon icon={faMagnifyingGlass} className="scale-150" />
-          </Link>
           <Link to="/radar">
             <FontAwesomeIcon icon={faSatelliteDish} className="scale-150" />
           </Link>
-          {/* <Link to="/settings" className="">
+          <Link to="/search">
+            <FontAwesomeIcon icon={faMagnifyingGlass} className="scale-150" />
+          </Link>
+          <Link to="/settings" className="">
             <FontAwesomeIcon icon={faGear} className="scale-150" />
-          </Link> */}
+          </Link>
         </footer>
       </div>
     </ContextProvider>

@@ -1,7 +1,8 @@
 import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { navigate } from "gatsby";
 import React, { FormEvent, useCallback } from "react";
-import { forecastNameQuery } from "../../utilities/queries";
+import { forecastPositionQuery } from "../../utilities/queries";
 import { Position, SearchLocation, Weather } from "../../utilities/types";
 
 export default function List({ className, locations, setPosition, setWeather }: {
@@ -12,19 +13,19 @@ export default function List({ className, locations, setPosition, setWeather }: 
 }): JSX.Element {
 
   const handleItemSelect = useCallback(async (event: FormEvent, location: SearchLocation) => {
-    event.preventDefault()    
-    const [newPosition, newWeather] = await forecastNameQuery(location.name)
+    event.preventDefault()
+    navigate('/')
+    const newPosition = { lat: location.lat, lon: location.lon }
+    const newWeather = await forecastPositionQuery(newPosition)
     setPosition(newPosition)
     setWeather(newWeather)
   }, [])
 
   return (
     <ul className={`${className} flex flex-col gap-5 overflow-y-auto`}>
-      {locations.length > 0 &&
-        locations.map((location) => {
-          return <ListItem location={location} handleItemSelect={handleItemSelect} />
-        })
-      }
+      {locations.length > 0 && locations.map((location) => {
+        return <ListItem location={location} handleItemSelect={handleItemSelect} />
+      })}
     </ul>
   )
 }
@@ -39,7 +40,7 @@ function ListItem({ location, handleItemSelect }: {
       className="flex justify-between items-center text-center"
       onClick={(event) => handleItemSelect(event, location)}
     >
-      <FontAwesomeIcon icon={faLocationDot} className="" />
+      <FontAwesomeIcon icon={faLocationDot} />
       <p>{location.name}</p>
       <p>{location.region}</p>
       <p>{location.country}</p>

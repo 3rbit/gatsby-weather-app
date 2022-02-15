@@ -4,8 +4,8 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useContext } from "react";
 import Condition from "../components/index/condition";
-import LocationTime from "../components/index/location-time";
-import MinMaxTemperature from "../components/index/min-max-temperature";
+import LocationTime from "../components/index/locationTime";
+import MinMaxTemperature from "../components/index/minMaxTemp";
 import Temperature from "../components/index/temperature";
 import Wind from "../components/index/wind";
 import { WeatherContext } from "../utilities/globalContext";

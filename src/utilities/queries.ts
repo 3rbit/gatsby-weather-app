@@ -1,5 +1,5 @@
 import { weatherAPIkey } from "./defaults";
-import { Position, Weather } from "./types";
+import { Position, SearchLocation, Weather } from "./types";
 
 // export function forecastNameQuery(name: string): [Position, Weather] {
 //   let position: Position, weather: Weather
@@ -51,7 +51,7 @@ export async function forecastPositionQuery(position: Position): Promise<Weather
   return await response.json()
 }
 
-export async function positionFromIP(): Promise<Position> {
+export async function positionFromIPQuery(): Promise<Position> {
   const response = await fetch("https://ipapi.co/json")
 
   if (!response.ok) 
@@ -59,4 +59,15 @@ export async function positionFromIP(): Promise<Position> {
 
   let data = await response.json()
   return { lat: data.latitude, lon: data.longitude }
+}
+
+export async function searchLocationNameQuery(name: string): Promise<[SearchLocation]> {
+  const response = await fetch(
+    `https://api.weatherapi.com/v1/search.json?key=${weatherAPIkey}&q=${name}`
+  )
+  
+  if (!response.ok) 
+    console.error(response.statusText)
+
+  return await response.json()
 }

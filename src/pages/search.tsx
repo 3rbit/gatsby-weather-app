@@ -14,10 +14,9 @@ export default function Search() {
       {({ setPosition }) => (
         <WeatherContext.Consumer>
           {({ setWeather }) => (
-
             <div className="flex flex-col p-5 h-[85vh] gap-5">
               <SearchBar
-                className="flex-none bubble py-5"
+                className="flex-none bubble"
                 setSearchResults={setSearchResults}
                 setWeather={setWeather}
                 setPosition={setPosition} />
@@ -26,9 +25,7 @@ export default function Search() {
                 locations={searchResults}
                 setWeather={setWeather}
                 setPosition={setPosition} />
-
             </div>
-
           )}
         </WeatherContext.Consumer>
       )}

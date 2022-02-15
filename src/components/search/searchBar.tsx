@@ -1,46 +1,34 @@
+import { faLocationDot, faSearch } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { navigate } from "gatsby";
 import React, { FormEvent, useRef } from "react";
-import { weatherAPIkey } from "../../utilities/defaults";
+import { forecastNameQuery, searchLocationNameQuery } from "../../utilities/queries";
 import { Position, SearchLocation, Weather } from "../../utilities/types";
 
 export default function SearchBar({ className, setSearchResults, setWeather, setPosition }: {
-    className: string
-    setSearchResults: React.Dispatch<React.SetStateAction<SearchLocation[]>>
-    setWeather: React.Dispatch<React.SetStateAction<Weather>>
-    setPosition: React.Dispatch<React.SetStateAction<Position>>
-  }) {
+  className: string
+  setSearchResults: React.Dispatch<React.SetStateAction<SearchLocation[]>>
+  setWeather: React.Dispatch<React.SetStateAction<Weather>>
+  setPosition: React.Dispatch<React.SetStateAction<Position>>
+}) {
   const searchRef = useRef(null)
 
-  function handleFormSubmit(event: FormEvent) {
-    event.preventDefault();
-
-    fetch(
-      `https://api.weatherapi.com/v1/forecast.json?key=${weatherAPIkey}&q=${searchRef.current.value}&days=2&aqi=no&alerts=no`
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        setPosition({
-          lat: data.location.lat,
-          lon: data.location.lon,
-        });
-        setWeather(data);
-      })
-      .catch((err) => console.error(err));
+  async function handleFormSubmit(event: FormEvent) {
+    event.preventDefault()
+    navigate('/')
+    const [newPosition, newWeather] = await forecastNameQuery(searchRef.current.value)
+    setPosition(newPosition)
+    setWeather(newWeather)
   }
 
-  function handleInputChange() {
-    console.log("searching...")
-    fetch(
-      `https://api.weatherapi.com/v1/search.json?key=${weatherAPIkey}&q=${searchRef.current.value}`
-    )
-      .then((response) => response.json())
-      .then((data) => { setSearchResults(data) })
-      .catch((err) => console.error(err));
+  async function handleInputChange() {
+    setSearchResults(await searchLocationNameQuery(searchRef.current.value))
   }
 
   return (
     <form
       onSubmit={handleFormSubmit}
-      className={`${className} flex justify-evenly`}
+      className={`${className} flex p-5 justify-between`}
     >
       <input
         type="text"
@@ -48,13 +36,14 @@ export default function SearchBar({ className, setSearchResults, setWeather, set
         ref={searchRef}
         onChange={handleInputChange}
         className="bg-transparent focus:outline-none"
+        autoFocus
       />
-      <input
+      <button
         type="submit"
-        value="Search"
-        className="font-bold rounded-3xl px-5 py-3 dark:bg-neutral-700 active:bg-zinc-600"
-        id="submit"
-      />
+        className="font-bold rounded-full px-4 py-3 dark:bg-neutral-700 active:bg-zinc-600"
+      >
+        <FontAwesomeIcon icon={faSearch} />
+      </button>
     </form>
   );
 }
