@@ -35,7 +35,7 @@ export default function SearchBar({ className, setSearchResults, setWeather, set
         placeholder="Search Location"
         ref={searchRef}
         onChange={handleInputChange}
-        className="bg-transparent focus:outline-none"
+        className="bg-transparent focus:outline-none w-full"
         autoFocus
       />
       <button

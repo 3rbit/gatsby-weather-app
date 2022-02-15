@@ -22,7 +22,7 @@ export default function List({ className, locations, setPosition, setWeather }: 
   }, [])
 
   return (
-    <ul className={`${className} flex flex-col gap-5 overflow-y-auto`}>
+    <ul className={`${className} p-5 flex flex-col gap-2.5 overflow-y-auto`}>
       {locations.length > 0 && locations.map((location) => {
         return <ListItem location={location} handleItemSelect={handleItemSelect} />
       })}
@@ -34,16 +34,18 @@ function ListItem({ location, handleItemSelect }: {
   location: SearchLocation
   handleItemSelect: (event: FormEvent, location: SearchLocation) => any
 }) {
-  return (
+  return <>
     <li
       key={location.id}
-      className="flex justify-between items-center text-center"
+      className="flex justify-between items-center text-center gap-5"
       onClick={(event) => handleItemSelect(event, location)}
     >
       <FontAwesomeIcon icon={faLocationDot} />
-      <p>{location.name}</p>
-      <p>{location.region}</p>
-      <p>{location.country}</p>
-    </li >
-  )
+      <p className="">{location.name}</p>
+      <p className="">{location.region}
+        <p>{location.country}</p>
+      </p>
+    </li>
+    <div className="border-t-[0.1rem] border-dashed border-opacity-50"></div> {/* Divider */}
+  </>
 }
