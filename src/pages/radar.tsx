@@ -1,7 +1,8 @@
-import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
+import { faLocationDot, faMinus, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { divIcon, point } from "leaflet";
-import React, { useContext, useState } from "react";
-import { MapContainer, Marker, TileLayer } from "react-leaflet";
+import React, { FormEvent, useContext, useState } from "react";
+import { MapContainer, Marker, TileLayer, useMap } from "react-leaflet";
 import { PositionContext } from "../utilities/globalContext";
 import { dateToStringBOM } from "../utilities/utilities";
 
@@ -31,7 +32,7 @@ export default function Radar() {
       center={position}
       zoom={13}
       maxZoom={10}
-      scrollWheelZoom={true}
+      zoomControl={false}
       className="h-screen w-screen z-0"
     >
       <TileLayer
@@ -43,6 +44,22 @@ export default function Radar() {
         url={`https://api.weather.bom.gov.au/v1/rainradar/tiles/${dateToStringBOM(datetime)}/{z}/{x}/{y}.png`}
       />
       <Marker position={position} icon={markerIcon} />
+      <MyComponent />
     </MapContainer>
   );
+}
+
+function MyComponent() {
+  const map = useMap()
+
+  return (
+    <div className="bubble m-5 z-[1000] flex flex-col fixed">
+      <button className="p-5 pb-2.5" onClick={() => map.zoomIn()}>
+        <FontAwesomeIcon icon={faPlus} className="text-white scale-110" />
+      </button>
+      <button className="p-5 pt-2.5" onClick={() => map.zoomOut()} >
+        <FontAwesomeIcon icon={faMinus} className="text-white scale-110" />
+      </button>
+    </div>
+  )
 }
