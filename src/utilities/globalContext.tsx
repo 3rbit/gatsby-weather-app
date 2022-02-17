@@ -1,7 +1,7 @@
 /* Reference: https://www.w3schools.com/react/react_usecontext.asp */
 import React, { createContext, useEffect, useState } from "react";
 import { defaultPosition, defaultWeather, weatherAPIkey } from "./defaults";
-import { forecastPositionQuery, positionFromIP } from "./queries";
+import { forecastPositionQuery, positionFromIPQuery } from "./queries";
 import { Location, Position, Weather } from "./types";
 
 export const PositionContext:
@@ -28,7 +28,7 @@ export default function ContextProvider({ children }) {
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
       ({ coords }) => callback({ lat: coords.latitude, lon: coords.longitude }),
-      async () => callback(await positionFromIP())
+      async () => callback(await positionFromIPQuery())
     );
 
     let callback = async (position: Position) => {
