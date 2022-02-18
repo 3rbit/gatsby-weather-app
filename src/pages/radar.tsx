@@ -1,27 +1,31 @@
 import { faLocationDot, faMinus, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { divIcon, point } from "leaflet";
-import React, { FormEvent, useContext, useState } from "react";
+import { DivIcon } from "leaflet";
+// import { DivIcon } from "leaflet/src/layer/marker";
+import React, { useContext, useState } from "react";
 import { MapContainer, Marker, TileLayer, useMap } from "react-leaflet";
 import { PositionContext } from "../utilities/globalContext";
 import { dateToStringBOM } from "../utilities/utilities";
 
 const id = "mapbox/satellite-v9";
 const access_token = "pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw";
-const markerIcon = divIcon({
-  html:
-    `<svg
-      style="transform-origin:top left; transform:scale(2.5)"
-      viewBox="0 0 ${faLocationDot.icon[0]} ${faLocationDot.icon[1]}"
-    >
-      <path 
-        fill="#f8fafc"
-        d="${faLocationDot.icon[4]}">
-      </path>
-    </svg>`,
-  iconAnchor: point([15, 40]),
-  className: "markerIcon",
-})
+
+let markerIcon: DivIcon
+if (typeof window !== 'undefined') {
+  markerIcon = new DivIcon({
+    html:
+      `<svg
+        style="transform-origin:top left; transform:scale(2.5)"
+        viewBox="0 0 ${faLocationDot.icon[0]} ${faLocationDot.icon[1]}"
+      >
+        <path 
+          fill="#f8fafc"
+          d="${faLocationDot.icon[4]}">
+        </path>
+      </svg>`,
+    iconAnchor: [15, 40],
+  })
+}
 
 export default function Radar() {
   const [datetime, setDatetime] = useState(new Date());
@@ -44,12 +48,12 @@ export default function Radar() {
         url={`https://api.weather.bom.gov.au/v1/rainradar/tiles/${dateToStringBOM(datetime)}/{z}/{x}/{y}.png`}
       />
       <Marker position={position} icon={markerIcon} />
-      <MyComponent />
+      <ZoomControl />
     </MapContainer>
   );
 }
 
-function MyComponent() {
+function ZoomControl() {
   const map = useMap()
 
   return (

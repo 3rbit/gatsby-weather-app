@@ -35,6 +35,7 @@
     "recharts": "^2.1.9"
   },
   "devDependencies": {
+    "@types/leaflet": "^1.7.9",
     "autoprefixer": "^10.4.0",
     "gatsby-plugin-postcss": "^5.0.0",
     "postcss": "^8.4.5",

@@ -1,6 +1,9 @@
 module.exports = {
   siteMetadata: {
-    siteUrl: "https://gatsby-weather-app.pages.dev/",
+    title: "Gatsby Weather App",
+    description: "Weather App made using GatsbyJS",
+    author: "@erbit",
+    siteUrl: "https://weather.erbit.me/",
   },
   plugins: [
     {
