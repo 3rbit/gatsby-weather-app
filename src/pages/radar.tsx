@@ -2,7 +2,7 @@ import { faLocationDot, faMinus, faPlus } from "@fortawesome/free-solid-svg-icon
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { DivIcon } from "leaflet";
 // import { DivIcon } from "leaflet/src/layer/marker";
-import React, { useContext, useEffect, useMemo, useState } from "react";
+import React, { useContext, useEffect, useMemo, useRef, useState } from "react";
 import { MapContainer, Marker, TileLayer, useMap } from "react-leaflet";
 import { PositionContext } from "../utilities/globalContext";
 import { WeatherMaps } from "../utilities/types";
@@ -33,23 +33,22 @@ export default function Radar() {
   // const [time, setTime] = useState(0);
   const [path, setPath] = useState('')
   const { position } = useContext(PositionContext);
+  const radarRef = useRef(null)
 
-  useEffect(() => {
-    rainViewerWeatherMaps().then((data) => {
+  // Radar Loop
+  useAsync(rainViewerWeatherMaps, (data) => {
+    let past = data.radar.past
+    setPath(past[0].path)
 
-      console.log(data);
-
-      let past = data.radar.past
-      setPath(past[0].path)
-
-      // past.forEach((frame) => {
-      //   setTimeout(() => {
-      //     setTime(frame.time)
-      //     setPath(frame.path)
-      //   }, 2);
-      // })
+    past.forEach((frame, i) => {
+      setTimeout(() => {
+        if (i > 0) {
+          radarRef.current.setUrl(`${data.host}/${frame.path}/256/{z}/{x}/{y}/1/1_1.png`)
+        }
+        console.log(radarRef.current._url);
+      }, 2000 * i);
     })
-  }, [])
+  })
 
   return (
     <MapContainer
@@ -64,7 +63,11 @@ export default function Radar() {
         url={`https://api.mapbox.com/styles/v1/${id}/tiles/256/{z}/{x}/{y}?access_token=${access_token}`}
       />
       {path.length > 0 &&
-        <TileLayer url={`https://tilecache.rainviewer.com/${path}/256/{z}/{x}/{y}/1/1_1.png`} />
+        <TileLayer
+          url={`https://tilecache.rainviewer.com/${path}/256/{z}/{x}/{y}/1/1_1.png`}
+          opacity={0.8}
+          ref={radarRef}
+        />
       }
 
       {/* <TileLayer
@@ -74,6 +77,16 @@ export default function Radar() {
       <ZoomControl />
     </MapContainer>
   );
+}
+
+function useAsync<T>(asyncFn: () => Promise<T>, onSuccess: (data: T) => void) {
+  useEffect(() => {
+    let isActive = true;
+    asyncFn().then(data => {
+      if (isActive) onSuccess(data);
+    });
+    return () => { isActive = false };
+  }, [asyncFn, onSuccess]);
 }
 
 async function rainViewerWeatherMaps(): Promise<WeatherMaps> {
