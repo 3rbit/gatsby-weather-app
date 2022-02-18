@@ -2,15 +2,16 @@ import { faLocationDot, faMinus, faPlus } from "@fortawesome/free-solid-svg-icon
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { DivIcon } from "leaflet";
 // import { DivIcon } from "leaflet/src/layer/marker";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import { MapContainer, Marker, TileLayer, useMap } from "react-leaflet";
 import { PositionContext } from "../utilities/globalContext";
+import { WeatherMaps } from "../utilities/types";
 import { dateToStringBOM } from "../utilities/utilities";
 
 const id = "mapbox/satellite-v9";
 const access_token = "pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw";
 
-let markerIcon: DivIcon
+let markerIcon: DivIcon = null
 if (typeof window !== 'undefined') {
   markerIcon = new DivIcon({
     html:
@@ -24,12 +25,31 @@ if (typeof window !== 'undefined') {
         </path>
       </svg>`,
     iconAnchor: [15, 40],
+    className: "markerIcon"
   })
 }
 
 export default function Radar() {
-  const [datetime, setDatetime] = useState(new Date());
+  // const [time, setTime] = useState(0);
+  const [path, setPath] = useState('')
   const { position } = useContext(PositionContext);
+
+  useEffect(() => {
+    rainViewerWeatherMaps().then((data) => {
+
+      console.log(data);
+
+      let past = data.radar.past
+      setPath(past[0].path)
+
+      // past.forEach((frame) => {
+      //   setTimeout(() => {
+      //     setTime(frame.time)
+      //     setPath(frame.path)
+      //   }, 2);
+      // })
+    })
+  }, [])
 
   return (
     <MapContainer
@@ -43,19 +63,28 @@ export default function Radar() {
         attribution='Imagery &copy; <a href="https://www.mapbox.com/">Mapbox</a>'
         url={`https://api.mapbox.com/styles/v1/${id}/tiles/256/{z}/{x}/{y}?access_token=${access_token}`}
       />
-      {/* <TileLayer url={`https://tilecache.rainviewer.com/v2/radar/${datetime}/256/{z}/{x}/{y}/1/1_1.png`} /> */}
-      <TileLayer
+      {path.length > 0 &&
+        <TileLayer url={`https://tilecache.rainviewer.com/${path}/256/{z}/{x}/{y}/1/1_1.png`} />
+      }
+
+      {/* <TileLayer
         url={`https://api.weather.bom.gov.au/v1/rainradar/tiles/${dateToStringBOM(datetime)}/{z}/{x}/{y}.png`}
-      />
+      /> */}
       <Marker position={position} icon={markerIcon} />
       <ZoomControl />
     </MapContainer>
   );
 }
 
+async function rainViewerWeatherMaps(): Promise<WeatherMaps> {
+  // Available weather maps from Rainviewer API
+  const response = await fetch("https://api.rainviewer.com/public/weather-maps.json")
+  if (!response.ok) console.error(response.statusText);
+  return await response.json()
+}
+
 function ZoomControl() {
   const map = useMap()
-
   return (
     <div className="bubble m-5 z-[1000] flex flex-col fixed">
       <button className="p-5 pb-2.5" onClick={() => map.zoomIn()}>
