@@ -1,5 +1,5 @@
 import { weatherAPIkey } from "./defaults";
-import { Position, SearchLocation, Weather } from "./types";
+import { Position, SearchLocation, Weather, WeatherMaps } from "./types";
 
 export async function forecastNameQuery(name: string): Promise<[Position: Position, Weather: Weather]> {
   const response = await fetch(`https://api.weatherapi.com/v1/forecast.json?key=${weatherAPIkey}&q=${name}&days=2&aqi=no&alerts=no`)

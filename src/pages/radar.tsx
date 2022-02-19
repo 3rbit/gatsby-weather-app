@@ -1,11 +1,9 @@
 import { faLocationDot, faMinus, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { DivIcon, LatLng } from "leaflet";
-import React, { useContext, useRef, useState } from "react";
+import React, { useContext, useRef } from "react";
 import { MapContainer, Marker, TileLayer, useMap } from "react-leaflet";
-import { PositionContext } from "../utilities/globalContext";
-import { WeatherMaps } from "../utilities/types";
-import useAsync from "../utilities/useAsync";
+import { PositionContext, WeatherMapsContext } from "../utilities/globalContext";
 
 const id = "mapbox/satellite-v9";
 const access_token = "pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw";
@@ -25,63 +23,47 @@ const markerIcon = (typeof window === 'undefined') ? null : new DivIcon({
   className: "markerIcon"
 })
 
-
 export default function Radar() {
-  const { position } = useContext(PositionContext);
-  const LatLngPosition = new LatLng(position.lat, position.lon);
+  const { position } = useContext(PositionContext)
 
-  return (
-    <MapContainer
-      center={LatLngPosition}
-      zoom={13}
-      maxZoom={10}
-      zoomControl={false}
-      className="h-screen w-screen z-0"
-    >
-      <TileLayer
-        attribution='Imagery &copy; <a href="https://www.mapbox.com/">Mapbox</a>'
-        url={`https://api.mapbox.com/styles/v1/${id}/tiles/256/{z}/{x}/{y}?access_token=${access_token}`}
-      />
-      <RadarTileLayer />
-      <Marker position={LatLngPosition} icon={markerIcon} />
-      <ZoomControl />
-    </MapContainer>
-  );
-}
+  if (position) {
+    const LatLngPosition = new LatLng(position.lat, position.lon)
 
-function RadarTileLayer(): JSX.Element {
-  const [path, setPath] = useState('')
-  const radarRef = useRef(null)
-
-  // Radar Loop
-  useAsync(rainViewerWeatherMaps, (data) => {
-    let past = data.radar.past
-    setPath(past[0].path)
-
-    past.forEach((frame, i) => {
-      setTimeout(() => {
-        if (i > 0) {
-          radarRef.current.setUrl(`${data.host}/${frame.path}/256/{z}/{x}/{y}/1/1_1.png`)
-        }
-        console.log(radarRef.current._url);
-      }, 2000 * i);
-    })
-  })
-
-  if (path.length > 0) {
-    return <TileLayer
-      url={`https://tilecache.rainviewer.com/${path}/256/{z}/{x}/{y}/1/1_1.png`}
-      opacity={0.8}
-      ref={radarRef} />
+    return (
+      <MapContainer
+        center={LatLngPosition}
+        zoom={13}
+        maxZoom={10}
+        zoomControl={false}
+        className="h-screen w-screen z-0"
+      >
+        <TileLayer
+          attribution='Imagery &copy; <a href="https://www.mapbox.com/">Mapbox</a>'
+          url={`https://api.mapbox.com/styles/v1/${id}/tiles/256/{z}/{x}/{y}?access_token=${access_token}`}
+        />
+        <RadarTileLayer />
+        <Marker position={LatLngPosition} icon={markerIcon} />
+        <ZoomControl />
+      </MapContainer>
+    )
   }
   return null
 }
 
-async function rainViewerWeatherMaps(): Promise<WeatherMaps> {
-  // Available weather maps from Rainviewer API
-  const response = await fetch("https://api.rainviewer.com/public/weather-maps.json")
-  if (!response.ok) console.error(response.statusText);
-  return await response.json()
+function RadarTileLayer(): JSX.Element {
+  const { weatherMaps } = useContext(WeatherMapsContext)
+  const radarRef = useRef(null)
+
+  if (weatherMaps) {
+    return (
+      <TileLayer
+        url={`https://tilecache.rainviewer.com/${weatherMaps.radar.past[0].path}/256/{z}/{x}/{y}/1/1_1.png`}
+        opacity={0.8}
+        ref={radarRef}
+      />
+    )
+  }
+  return null
 }
 
 function ZoomControl(): JSX.Element {
