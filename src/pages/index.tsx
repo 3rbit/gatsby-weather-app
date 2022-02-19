@@ -1,20 +1,15 @@
 import React from "react";
-import Condition from "../components/index/condition";
-import ForecastGraph from "../components/index/forecastGraph";
-import LocationTime from "../components/index/locationTime";
-import MinMaxTemperature from "../components/index/minMaxTemp";
-import Temperature from "../components/index/temperature";
-import Wind from "../components/index/wind";
-
-export default function Index(props: any) {
+import { LocationTime, Temperature, MinMaxTemperature, Condition, Wind, ForecastGraph } from "../components/index";
+export default function Index() {
+  
   return (
     <div className="grid grid-cols-12 gap-5 p-5 h-[85vh]">
-      <LocationTime />
-      <Temperature />
-      <MinMaxTemperature />
-      <Condition />
-      <Wind />
-      <ForecastGraph />
+      <LocationTime className="bubble col-span-full" />
+      <Temperature className="bubble col-span-7" />
+      <MinMaxTemperature className="bubble col-span-5" />
+      <Condition className="bubble col-span-5" />
+      <Wind className="bubble col-span-7" />
+      <ForecastGraph className="bubble col-span-full" />
     </div>
   )
 }

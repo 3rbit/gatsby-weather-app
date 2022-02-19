@@ -1,11 +1,11 @@
-import { faLocationDot, faSearch } from "@fortawesome/free-solid-svg-icons";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { navigate } from "gatsby";
 import React, { FormEvent, useRef } from "react";
 import { forecastNameQuery, searchLocationNameQuery } from "../../utilities/queries";
 import { Position, SearchLocation, Weather } from "../../utilities/types";
 
-export default function SearchBar({ className, setSearchResults, setWeather, setPosition }: {
+export function SearchBar({ className, setSearchResults, setWeather, setPosition }: {
   className: string
   setSearchResults: React.Dispatch<React.SetStateAction<SearchLocation[]>>
   setWeather: React.Dispatch<React.SetStateAction<Weather>>

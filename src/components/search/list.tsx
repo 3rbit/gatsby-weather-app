@@ -5,7 +5,7 @@ import React, { FormEvent, useCallback } from "react";
 import { forecastPositionQuery } from "../../utilities/queries";
 import { Position, SearchLocation, Weather } from "../../utilities/types";
 
-export default function List({ className, locations, setPosition, setWeather }: {
+export function List({ className, locations, setPosition, setWeather }: {
   className: string
   locations: SearchLocation[]
   setPosition: React.Dispatch<React.SetStateAction<Position>>

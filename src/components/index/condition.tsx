@@ -1,13 +1,12 @@
 import React, { useContext } from "react";
 import { WeatherContext } from "../../utilities/globalContext";
 
-export default function Condition(props: any) {
-  const { weather } = useContext(WeatherContext);
-
+export function Condition({ className }: { className: string }) {
+  const condition = useContext(WeatherContext).weather.current.condition;
   return (
-    <div className="bubble col-span-5 pb-5 flex flex-col items-center justify-center">
-      <img src={weather.current.condition.icon} className="aspect-square" />
-      <p className="font-bold text-2xl text-center">{weather.current.condition.text}</p>
+    <div className={`${className} flex flex-col items-center justify-center`}>
+      <img src={condition.icon} className="aspect-square" />
+      <p className="font-bold text-2xl text-center pb-5 ">{condition.text}</p>
     </div>
   )
 }

@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
-import List from "../components/search/list";
-import SearchBar from "../components/search/searchBar";
+import React, { useState } from "react";
+import { SearchBar, List } from "../components/search";
 import { PositionContext, WeatherContext } from "../utilities/globalContext";
 import { SearchLocation } from "../utilities/types";
 

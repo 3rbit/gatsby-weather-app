@@ -1,21 +1,21 @@
 import React, { useContext, useMemo } from "react";
-import { Area, AreaChart, LabelList, ResponsiveContainer, Text, Tooltip, XAxis, YAxis } from "recharts";
+import { Area, AreaChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { WeatherContext } from "../../utilities/globalContext";
 
-export default function ForecastGraph() {
-  const { weather } = useContext(WeatherContext)
+export function ForecastGraph({ className }: { className: string }) {
+  const forecast = useContext(WeatherContext).weather.forecast
   const forecastData = useMemo(() => {
     try {
-      let forecastRemaining = weather.forecast.forecastday[0].hour.slice(new Date().getHours()) // Forecast data for the remainder of the day
-      let forecastTomorrow = weather.forecast.forecastday[1].hour.slice(24 - new Date().getHours()) // Forecast for tomorrow
+      let forecastRemaining = forecast.forecastday[0].hour.slice(new Date().getHours()) // Forecast data for the remainder of the day
+      let forecastTomorrow = forecast.forecastday[1].hour.slice(24 - new Date().getHours()) // Forecast for tomorrow
       return forecastRemaining.concat(forecastTomorrow) // Return the forecasts for the next 24 hours from now
     } catch (error) {
       return []
     }
-  }, [weather])
+  }, [forecast])
 
   return (
-    <div className="bubble col-span-full">
+    <div className={`${className}`}>
       <ResponsiveContainer width="99%" height="99%">
         <AreaChart
           data={forecastData}
@@ -41,16 +41,16 @@ export default function ForecastGraph() {
             unit="°C"
             tick={{ fontSize: 13 }}
           />
-          <Tooltip content={<CustomTooltip />} />
+          <Tooltip content={<CustomTooltip active={undefined} payload={undefined} label={undefined} />} />
           <Area
             dataKey="temp_c"
+            type="monotone"
             stroke="#8884d8"
             fillOpacity={1}
             fill="url(#colourTemp)"
             strokeWidth={0.5}
             strokeOpacity={0.5}
           >
-            {/* <LabelList dataKey="condition.icon" content={<CustomLabel />} position="top" /> */}
           </Area>
         </AreaChart>
       </ResponsiveContainer>
@@ -68,11 +68,3 @@ function CustomTooltip({ active, payload, label }) {
   }
   return null;
 }
-
-// function CustomLabel({ x, y, value }) {
-//   return (
-//     <text x={x} y={y} dy={-4}>
-//       <img src={value} />
-//     </text>
-//   )
-// }
