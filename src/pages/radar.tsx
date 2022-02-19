@@ -1,9 +1,9 @@
-import { faLocationDot, faMinus, faPlus } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
 import { DivIcon, LatLng } from "leaflet";
-import React, { useContext, useEffect, useRef } from "react";
-import { MapContainer, Marker, TileLayer, useMap } from "react-leaflet";
-import { PositionContext, WeatherMapsContext } from "../utilities/globalContext";
+import React, { useContext } from "react";
+import { MapContainer, Marker, TileLayer } from "react-leaflet";
+import { CustomZoomControl, RadarTileLayer } from "../components/radar";
+import { PositionContext } from "../utilities/globalContext";
 
 const id = "mapbox/satellite-v9";
 const access_token = "pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw";
@@ -35,6 +35,7 @@ export default function Radar() {
         zoom={13}
         maxZoom={10}
         zoomControl={false}
+        fadeAnimation={false}
         className="h-screen w-screen z-0"
       >
         <TileLayer
@@ -43,53 +44,11 @@ export default function Radar() {
         />
         <RadarTileLayer />
         <Marker position={LatLngPosition} icon={markerIcon} />
-        <ZoomControl />
+        <CustomZoomControl />
       </MapContainer>
     )
   }
   return null
 }
 
-function RadarTileLayer(): JSX.Element {
-  const { weatherMaps } = useContext(WeatherMapsContext)
-  const radarRef = useRef(null)
 
-  if (weatherMaps) {
-    const past = weatherMaps.radar.past
-
-    useEffect(() => {
-      const radarLoop = async () => {
-        for (let i = 1; i < past.length; i++) {
-          radarRef.current.setUrl(`${weatherMaps.host}/${past[i].path}/256/{z}/{x}/{y}/1/1_1.png`)
-          await new Promise(r => setTimeout(r, 2000))
-        }
-      }
-
-      radarLoop()             // execute loop
-        .catch(console.error) // catch any errors
-    }, [])
-
-    return (
-      <TileLayer
-        url={`https://tilecache.rainviewer.com/${past[0].path}/256/{z}/{x}/{y}/1/1_1.png`}
-        opacity={0.8}
-        ref={radarRef}
-      />
-    )
-  }
-  return null
-}
-
-function ZoomControl(): JSX.Element {
-  const map = useMap()
-  return (
-    <div className="bubble m-5 z-[1000] flex flex-col fixed">
-      <button className="p-5 pb-2.5" onClick={() => map.zoomIn()}>
-        <FontAwesomeIcon icon={faPlus} className="text-white scale-110" />
-      </button>
-      <button className="p-5 pt-2.5" onClick={() => map.zoomOut()} >
-        <FontAwesomeIcon icon={faMinus} className="text-white scale-110" />
-      </button>
-    </div>
-  )
-}
