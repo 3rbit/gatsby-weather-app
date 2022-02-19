@@ -13,10 +13,10 @@ export function Wind({ className }: { className: string }) {
         className="p-3"
         style={{ transform: `rotate(${currentWeather.wind_degree}deg) scale(3)` }}
       />
-      <p className="flex-initial font-bold text-3xl text-center">
-        {currentWeather.wind_kph}
+      <div className="font-bold text-3xl text-center">
+        <p>{currentWeather.wind_kph}</p>
         <p className="text-base">km/h</p>
-      </p>
+      </div>
     </div>
   )
 }

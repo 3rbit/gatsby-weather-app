@@ -1,7 +1,7 @@
 import { faLocationDot, faMinus, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { DivIcon, LatLng } from "leaflet";
-import React, { useContext, useRef } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import { MapContainer, Marker, TileLayer, useMap } from "react-leaflet";
 import { PositionContext, WeatherMapsContext } from "../utilities/globalContext";
 
@@ -55,9 +55,23 @@ function RadarTileLayer(): JSX.Element {
   const radarRef = useRef(null)
 
   if (weatherMaps) {
+    const past = weatherMaps.radar.past
+
+    useEffect(() => {
+      const radarLoop = async () => {
+        for (let i = 1; i < past.length; i++) {
+          radarRef.current.setUrl(`${weatherMaps.host}/${past[i].path}/256/{z}/{x}/{y}/1/1_1.png`)
+          await new Promise(r => setTimeout(r, 2000))
+        }
+      }
+
+      radarLoop()             // execute loop
+        .catch(console.error) // catch any errors
+    }, [])
+
     return (
       <TileLayer
-        url={`https://tilecache.rainviewer.com/${weatherMaps.radar.past[0].path}/256/{z}/{x}/{y}/1/1_1.png`}
+        url={`https://tilecache.rainviewer.com/${past[0].path}/256/{z}/{x}/{y}/1/1_1.png`}
         opacity={0.8}
         ref={radarRef}
       />
