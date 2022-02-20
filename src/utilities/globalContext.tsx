@@ -1,7 +1,6 @@
 /* Reference: https://www.w3schools.com/react/react_usecontext.asp */
 import React, { createContext, useEffect, useState } from "react";
-import { defaultPosition, defaultWeather, weatherAPIkey } from "./defaults";
-import { forecastPositionQuery, positionFromIPQuery, weatherMapsQuery } from "./queries";
+import { forecastPositionQuery, positionFromIPQuery } from "./queries";
 import { Position, Settings, Weather, WeatherMaps } from "./types";
 
 export const SettingsContext:
@@ -31,6 +30,7 @@ export default function ContextProvider({ children }) {
     [weatherMaps: WeatherMaps, setWeatherMaps: React.Dispatch<React.SetStateAction<WeatherMaps>>]
     = useState(null);
 
+    // Set weather and position
   useEffect(() => {
     let callback = async (position: Position) => {
       setPosition(position)
@@ -43,6 +43,7 @@ export default function ContextProvider({ children }) {
     )
   }, []);
 
+  // Set weather maps
   useEffect(() => {
     // Reference: https://devtrium.com/posts/async-functions-useeffect
     const fetchData = async () => {         // declare the async data fetching function
@@ -56,6 +57,11 @@ export default function ContextProvider({ children }) {
     fetchData()                             // call the function
       .catch(console.error)                 // make sure to catch any error
   }, [])
+
+  // Set settings
+  // useEffect(() => {
+  //   let currentSettings = localStorage.getItem('settings')
+  // }, [])
 
   return (
     <SettingsContext.Provider value={{ settings, setSettings }}>
