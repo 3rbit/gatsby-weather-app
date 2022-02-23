@@ -1,5 +1,5 @@
 /* Reference: https://www.w3schools.com/react/react_usecontext.asp */
-import React, { createContext, useEffect, useState } from "react";
+import React, { createContext, useEffect, useLayoutEffect, useState } from "react";
 import { forecastPositionQuery, positionFromIPQuery } from "./queries";
 import { Position, Settings, Weather, WeatherMaps } from "./types";
 
@@ -31,7 +31,7 @@ export default function ContextProvider({ children }) {
     = useState(null);
 
     // Set weather and position
-  useEffect(() => {
+  useLayoutEffect(() => {
     let callback = async (position: Position) => {
       setPosition(position)
       setWeather(await forecastPositionQuery(position))
@@ -43,20 +43,7 @@ export default function ContextProvider({ children }) {
     )
   }, []);
 
-  // Set weather maps
-  useEffect(() => {
-    // Reference: https://devtrium.com/posts/async-functions-useeffect
-    const fetchData = async () => {         // declare the async data fetching function
-      const response = await fetch(         // get the data from the api
-        "https://api.rainviewer.com/public/weather-maps.json"
-      )  
-      const data = await response.json()    // convert the data to json
-      setWeatherMaps(data)                  // set state with the result
-    }
 
-    fetchData()                             // call the function
-      .catch(console.error)                 // make sure to catch any error
-  }, [])
 
   // Set settings
   // useEffect(() => {
@@ -67,9 +54,7 @@ export default function ContextProvider({ children }) {
     <SettingsContext.Provider value={{ settings, setSettings }}>
       <PositionContext.Provider value={{ position, setPosition }}>
         <WeatherContext.Provider value={{ weather, setWeather }}>
-          <WeatherMapsContext.Provider value={{ weatherMaps, setWeatherMaps }}>
             {children}
-          </WeatherMapsContext.Provider>
         </WeatherContext.Provider>
       </PositionContext.Provider>
     </SettingsContext.Provider>

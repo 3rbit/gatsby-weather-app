@@ -1,24 +1,38 @@
 import { faBackwardStep, faForwardStep, faPause, faPlay, faRotateLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { TileLayer } from "react-leaflet";
 import { WeatherMapsContext } from "../../utilities/globalContext";
 
 export function RadarTileLayer(): JSX.Element {
-  const { weatherMaps } = useContext(WeatherMapsContext);
+  const  [weatherMaps, setWeatherMaps] = useState(null);
   const radarRef = useRef(null);
   const [index, setIndex] = useState(0) // index of displayed past weatherMap
-  const pastMaps = weatherMaps.radar.past;
+
+  // Set weather maps
+  useLayoutEffect(() => {
+    // Reference: https://devtrium.com/posts/async-functions-useeffect
+    const fetchData = async () => {         // declare the async data fetching function
+      const response = await fetch(         // get the data from the api
+        "https://api.rainviewer.com/public/weather-maps.json"
+      )  
+      const data = await response.json()    // convert the data to json
+      setWeatherMaps(data)                  // set state with the result
+    }
+
+    fetchData()                             // call the function
+      .catch(console.error)                 // make sure to catch any error
+  }, [])
 
   if (weatherMaps)
     return <>
       <TileLayer
-        url={`https://tilecache.rainviewer.com/${pastMaps[index].path}/256/{z}/{x}/{y}/1/1_1.png`}
+        url={`https://tilecache.rainviewer.com/${weatherMaps.radar.past[index].path}/256/{z}/{x}/{y}/1/1_1.png`}
         opacity={0.8}
         ref={radarRef}
       />
       <RadarDisplay
-        pastMaps={pastMaps}
+        pastMaps={weatherMaps.radar.past}
         index={index}
       />
       <RadarControl
